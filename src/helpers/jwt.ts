@@ -1,14 +1,11 @@
-import { sign as signBase, verify as verifyBase } from 'jsonwebtoken'
-import env from '@/helpers/env'
+import { User } from '@prisma/client'
+import env from 'src/helpers/env.js'
+import jwt from 'jsonwebtoken'
 
-interface UserPayload {
-  id: string
+export function getAuthToken(user: User) {
+  return jwt.sign({ userId: user.id }, env.JWT_SECRET)
 }
 
-export function sign(payload: UserPayload) {
-  return signBase(payload, env.JWT)
-}
-
-export function verify(token: string) {
-  return verifyBase(token, env.JWT) as UserPayload
+export function verifyAuthToken(jwtString: string) {
+  return jwt.verify(jwtString, env.JWT_SECRET)
 }

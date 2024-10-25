@@ -1,12 +1,12 @@
-import 'module-alias/register'
-import 'source-map-support/register'
+import 'json-bigint-patch'
+import 'reflect-metadata'
 
-import runApp from '@/helpers/runApp'
-import runMongo from '@/helpers/mongo'
+import express from 'express'
+import bootstrap from 'src/helpers/bootstrap.js'
 
 void (async () => {
-  console.log('Starting mongo')
-  await runMongo()
-  console.log('Mongo connected')
-  await runApp()
+  const app = express()
+
+  console.log('Starting app')
+  await bootstrap(app)
 })()

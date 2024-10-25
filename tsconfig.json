@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "module": "NodeNext",
     "target": "ESNext",
     "moduleResolution": "NodeNext",
@@ -7,18 +8,19 @@
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "src/*": ["*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strict": true,
     "useUnknownInCatchVariables": false,
-    "noImplicitOverride": true,      
+    "noImplicitOverride": true,
     "exactOptionalPropertyTypes": true,
-    "noPropertyAccessFromIndexSignature": true, 
-    "esModuleInterop": true,         
-    "allowSyntheticDefaultImports": true, 
-    "skipLibCheck": true 
+    "noPropertyAccessFromIndexSignature": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noErrorTruncation": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

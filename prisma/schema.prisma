@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "relationJoins"]
+  previewFeatures = ["fullTextSearchPostgres", "relationJoins"]
 }
 
 generator typegraphql {
@@ -17,43 +17,33 @@ datasource db {
 }
 
 model User {
-  /// @TypeGraphQL.omit(output: true, input: true)
   createdAt  DateTime    @default(now())
-  /// @TypeGraphQL.omit(output: true, input: true)
   updatedAt  DateTime    @updatedAt
   id         String      @id @default(cuid())
   /// @TypeGraphQL.omit(output: true, input: true)
-  authTokens AuthToken[] @relation("UserToAuthToken")
-  /// @TypeGraphQL.omit(output: true, input: true)
-  posts      Post[]      @relation("UserToPosts")
-  ethAddress String
+  authTokens AuthToken[]
+  posts      Post[]
 }
 
 model AuthToken {
-  /// @TypeGraphQL.omit(output: true, input: true)
   createdAt  DateTime @default(now())
-  /// @TypeGraphQL.omit(output: true, input: true)
   updatedAt  DateTime @updatedAt
-  /// @TypeGraphQL.omit(output: true, input: true)
   id         String   @id @default(cuid())
-  /// @TypeGraphQL.omit(output: true, input: true)
   token      String
   userAgent  String
-  user       User     @relation("UserToAuthToken", fields: [userId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
 
   @@index([token])
 }
 
 model Post {
-  /// @TypeGraphQL.omit(output: true, input: true)
   createdAt DateTime @default(now())
-  /// @TypeGraphQL.omit(output: true, input: true)
   updatedAt DateTime @updatedAt
   id        String   @id @default(cuid())
   title     String
   content   String
-  author    User     @relation("UserToPosts", fields: [authorId], references: [id], onDelete: Cascade)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
 
   @@index([authorId])

@@ -6,4 +6,12 @@ jobs:
   build-and-lint-code:
     runs-on: ubuntu-latest
     steps:
-      - uses: Borodutch/build-and-lint-code@v1.0.3
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+      - name: Run linter
+        run: bun lint
+      - name: Build the code
+        run: bun build
+      

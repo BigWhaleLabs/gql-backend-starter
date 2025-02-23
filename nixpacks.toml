@@ -1,11 +1,5 @@
-[variables]
-NODE_ENV = "production"
-
 [phases.install]
-cmds = ["yarn install --frozen-lockfile"]
-
-[phases.build]
-cmds = ["yarn build"]
+cmds = ["bun install"]
 
 [start]
-cmd = "yarn apply-migrations && node dist/server.js"
+cmd = "bun apply-migrations && bun start"

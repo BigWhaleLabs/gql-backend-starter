@@ -5,7 +5,6 @@
   "module": "src/server.ts",
   "repository": "https://github.com/BigWhaleLabs/gql-backend-starter",
   "author": "BigWhaleLabs <gql.starter@bwl.gg>",
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "lint": "bun --bun eslint"

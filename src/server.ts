@@ -8,5 +8,5 @@ void (async () => {
   const app = express()
 
   console.log('Starting app')
-  await bootstrap(app);
+  await bootstrap(app)
 })()

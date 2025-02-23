@@ -6,7 +6,6 @@ export default tseslint.config(
   tseslint.configs.strict,
   {
     files: ['**/*.ts'],
-    rules: {},
   },
   prettier,
 )

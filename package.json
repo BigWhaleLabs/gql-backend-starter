@@ -7,7 +7,7 @@
   "author": "BigWhaleLabs <gql.starter@bwl.gg>",
   "license": "MIT",
   "scripts": {
-    "start": "bun run src/server.ts",
+    "start": "bun src/server.ts",
     "build-ts": "tsc --skipLibCheck --noEmit",
     "lint": "bun --bun eslint",
     "prisma-generate": "prisma format && prisma generate",

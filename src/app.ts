@@ -94,16 +94,8 @@ const gracefulShutdown = async () => {
   console.log(
     `Received kill signal, shutting down gracefully (bun ${process.pid})`,
   )
-  setTimeout(() => {
-    console.error(
-      `Could not close connections in time, forcefully shutting down (bun ${process.pid})`,
-    )
-    process.exit(1)
-  }, 10000)
   await server.stop()
-  console.log(`Closed out remaining connections (bun ${process.pid})`)
   await prismaClient.$disconnect()
-  console.log(`Shutting down (bun ${process.pid})`)
   process.exit(0)
 }
 

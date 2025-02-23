@@ -1,5 +1,5 @@
-import { User } from '@prisma/client'
-import env from 'src/helpers/env.js'
+import { type User } from '@prisma/client'
+import env from 'helpers/env.js'
 import jwt from 'jsonwebtoken'
 
 export function getAuthToken(user: User) {

@@ -1,56 +1,36 @@
+import { getAuthToken } from 'helpers/jwt.js'
+import type Context from 'models/Context.js'
 import { Args, ArgsType, Ctx, Field, Mutation, Resolver } from 'type-graphql'
-import { GraphQLError } from 'graphql'
-import { getAuthToken } from 'src/helpers/jwt.js'
-import Context from 'src/models/Context.js'
-import privy from 'src/helpers/privy.js'
 
 @ArgsType()
 class LoginParams {
   @Field()
-  token!: string
+  password!: string
 }
+
 @Resolver()
 export default class LoginResolver {
   @Mutation(() => String)
-  async loginWithPrivy(
+  async loginWithPassword(
     @Args()
-    { token }: LoginParams,
-    @Ctx() { prisma, req }: Context
+    { password }: LoginParams,
+    @Ctx() { prisma, req }: Context,
   ) {
-    // Get user
-    const { wallet } = await privy.getUser({
-      idToken: token,
-    })
-    // Check if there is an embedded user wallet
-    if (!wallet) throw new GraphQLError('No wallet data provided')
-    // See if it's a login
-    const user = await prisma.user.findFirst({
+    const passwordHash = await Bun.password.hash(password)
+    const user = await prisma.user.upsert({
       where: {
-        ethAddress: wallet.address,
+        passwordHash,
       },
-    })
-    if (user) {
-      const authToken = await prisma.authToken.create({
-        data: {
-          token: getAuthToken(user),
-          userAgent: req.headers['user-agent'] || 'Unknown',
-          userId: user.id,
-        },
-      })
-      return authToken.token
-    }
-    // Signup the user
-    const newUser = await prisma.user.create({
-      data: {
-        ethAddress: wallet.address,
+      create: {
+        passwordHash,
       },
+      update: {},
     })
-
     const authToken = await prisma.authToken.create({
       data: {
-        token: getAuthToken(newUser),
+        token: getAuthToken(user),
         userAgent: req.headers['user-agent'] || 'Unknown',
-        userId: newUser.id,
+        userId: user.id,
       },
     })
     return authToken.token

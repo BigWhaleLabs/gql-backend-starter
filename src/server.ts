@@ -1,12 +1,9 @@
-import 'json-bigint-patch'
+import 'core-js'
 import 'reflect-metadata'
 
-import express from 'express'
-import bootstrap from 'src/helpers/bootstrap.js'
+import runApp from 'helpers/runApp'
 
 void (async () => {
-  const app = express()
-
   console.log('Starting app')
-  await bootstrap(app)
+  await runApp()
 })()
